@@ -1,0 +1,31 @@
+$keycolor: #FFD768;
+$basecolor: #fff;
+
+@mixin search($margin: 13px 0, $padding: 0 20px, $font-size: 1.8rem) {
+  color: $basecolor;
+  width: 100%;
+  margin: $margin;
+  font-size: $font-size;
+  outline: none;
+  padding: $padding;
+  background: none;
+}
+
+@mixin submit($padding: 7px 50px) {
+  color: #000;
+  display: block;
+  background: $keycolor;
+  padding: $padding;
+  border-radius: 7px;
+  margin: 20px auto;
+
+  &:hover {
+    font-weight: 600;
+  }
+}
+
+@mixin notice {
+  color: #e8374a;
+  display: inline-block;
+  padding-left: 10px;
+}
