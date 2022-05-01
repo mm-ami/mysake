@@ -1,11 +1,9 @@
 <template>
   <section>
-    <div class="search-border">
-      <input v-model="keyword" type="text" placeholder="お酒の名前を検索" class="search">
-    </div>
+    <search-content @parentMethod="handleChangeQuery"></search-content>
     <div class="card">
-      <div v-if="items.length" class="cardItem">
-        <div v-for="item in filteredUsers" :key="item.id" class="cardItem__inner">
+      <div class="cardItem">
+        <div v-for="item in items" :key="item.id" class="cardItem__inner">
           <h3 class="cardItem__inner__public">{{ item.public != 0 ? "公開" : "非公開" }}</h3>
           <h3 class="cardItem__inner__day">{{ $dateFns.format(item.t_date, 'yyyy年MM月dd日') }}</h3>
           <h2 class="cardItem__inner__title"><fa class="icon" :icon="faWineGlass" />{{ item.title }}</h2>
@@ -19,7 +17,7 @@
           </div>
         </div>
       </div>
-      <div v-else>
+      <div v-if="!items.length">
         <h2 class="noItem">登録されたお酒がありません。</h2>
       </div>
     </div>
@@ -40,12 +38,14 @@
 import { faXmark, faWineGlass } from "@fortawesome/free-solid-svg-icons"
 
 import FormContent from "../components/FormContent.vue"
+import SearchContent from "../components/SearchContent.vue"
 
 export default {
   name: 'MyPage',
 
   components:{
-    FormContent
+    FormContent,
+    SearchContent
   },
 
   transition: {
@@ -54,7 +54,6 @@ export default {
 
   data() {
     return {
-      items: [],
       editItem: {},
       keyword: '',
       show: false,
@@ -62,10 +61,8 @@ export default {
   },
 
   computed: {
-    filteredUsers() {
-      return this.items.filter((item) => {
-        return item.title.includes(this.keyword)
-      })
+    items() {
+      return this.$store.getters.filterItems
     },
     faWineGlass() {
       return faWineGlass
@@ -78,11 +75,15 @@ export default {
   async mounted() {
     await this.$axios.post("/mypage/mypagelist", this.$auth.$state.user.user)
     .then((response) => {
-      this.items = response.data.response
+      this.$store.dispatch("stateSetDatabase", response.data.response)
     })
   },
 
   methods: {
+    handleChangeQuery(args) {
+      console.log(this.items)
+      this.$store.commit("setFilterQuery", args)
+    },
 
     additem(e) {
       this.$refs.form.editItem(e)

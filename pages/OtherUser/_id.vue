@@ -1,12 +1,10 @@
 <template>
   <section>
-    <div class="search-border">
-      <input v-model="keyword" type="text" placeholder="お酒の名前を検索" class="search">
-    </div>
+    <search-content @parentMethod="handleChangeQuery"></search-content>
     <h2 class="other_username"><fa class="user-icon" :icon="faCircleUser" />{{ username }} さん</h2>
     <div class="card">
       <div class="cardItem">
-        <div v-for="item in filteredUsers" :key="item.id" class="cardItem__inner">
+        <div v-for="item in items" :key="item.id" class="cardItem__inner">
           <h2 class="cardItem__inner__title"><fa class="icon" :icon="faWineGlass" />{{ item.title }}</h2>
           <div class="cardItem__inner__star">
             <star-rating v-model="item.score" :increment="0.5" :star-size="28" active-color="#FFD768" :read-only="true"></star-rating>
@@ -16,6 +14,9 @@
           </div>
         </div>
       </div>
+      <div v-if="!items.length">
+        <h2 class="noItem">登録されたお酒がありません。</h2>
+      </div>
     </div>
     
   </section>
@@ -23,22 +24,25 @@
 
 <script>
 import { faWineGlass, faCircleUser } from "@fortawesome/free-solid-svg-icons"
+import SearchContent from "../../components/SearchContent.vue"
+
 export default {
   name: 'OtherPage',
 
+  components:{
+    SearchContent
+  },
+
   data() {
     return {
-      items: [],
       keyword: '',
       username: ''
     }
   },
 
   computed: {
-    filteredUsers() {
-      return this.items.filter((item) => {
-        return item.title.includes(this.keyword)
-      })
+    items() {
+      return this.$store.getters.filterItems
     },
     faWineGlass() {
       return faWineGlass
@@ -51,9 +55,15 @@ export default {
   async mounted() {
     await this.$axios.post("/home/otheruser", this.$route.query)
     .then((response) => {
-      this.items = response.data.response
-      this.username = this.items[0].name
+      this.$store.dispatch("stateSetDatabase", response.data.result)
+      this.username = this.$store.state.items[0].name
     })
+  },
+
+  methods: {
+    handleChangeQuery(args) {
+      this.$store.commit("setFilterQuery", args)
+    },
   }
 }
 </script>

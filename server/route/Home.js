@@ -25,8 +25,8 @@ router.post("/otheruser", async function(req, res) {
   .andWhere("public", 1)
   .innerJoin("users", "topics.user_id", "users.id")
   .orderBy("t_date", "DESC")
-  .then((response) => {
-    res.json({response})
+  .then((result) => {
+    res.json({result})
   })
   .catch(() => {
     res.sendStatus(401)

@@ -5,9 +5,6 @@
       <h3>ログインすると自分が飲んだお酒を登録できます！</h3>
     </div>
     <search-content @parentMethod="handleChangeQuery"></search-content>
-    <!-- <div class="search-border">
-      <input v-model="keyword" type="text" placeholder="お酒の名前を検索" class="search">
-    </div> -->
 
     <div class="card">
       <p v-if="error">{{error}}</p>
@@ -43,6 +40,10 @@ export default {
 
   data() {
     return {
+      // filterQuery: {
+      //   title: "",
+      //   score: ""
+      // },
       error: ''
     }
   },
