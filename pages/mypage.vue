@@ -8,7 +8,7 @@
           <h3 class="cardItem__inner__day">{{ $dateFns.format(item.t_date, 'yyyy年MM月dd日') }}</h3>
           <h2 class="cardItem__inner__title"><fa class="icon" :icon="faWineGlass" />{{ item.title }}</h2>
           <div class="cardItem__inner__star">
-            <star-rating v-model="item.score" :star-size="28" active-color="#FFD768" :read-only="true"></star-rating>
+            <star-rating v-model="item.score" :increment="0.5" :star-size="28" active-color="#FFD768" :read-only="true"></star-rating>
           </div>
           <div class="cardItem__inner__text">{{ item.body }}</div>
           <div class="cardItem__inner__edit">
@@ -140,12 +140,6 @@ export default {
       }
     }
   }
-}
-
-.noItem {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 2rem;
 }
 
 .modal {

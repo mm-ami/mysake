@@ -15,7 +15,7 @@
         </div>
       </div>
       <div v-if="!items.length">
-        <h2 class="noItem">登録されたお酒がありません。</h2>
+        <h2 class="noItem">表示できるお酒がありません。</h2>
       </div>
     </div>
     

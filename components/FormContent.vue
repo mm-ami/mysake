@@ -15,7 +15,7 @@
       
       <div class="form__inner">
         <label>星評価</label>
-        <star-rating v-model="$v.user.score.$model" class="star" :star-size="50"></star-rating>
+        <star-rating v-model="$v.user.score.$model" :increment="0.5" class="star" :star-size="50"></star-rating>
       </div>
 
       <div class="form__inner">
