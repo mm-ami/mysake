@@ -17,9 +17,24 @@ body {
   font-family: 'Kiwi Maru', serif;
 }
 
+.page-enter {
+  opacity: 0;
+}
+.page-enter-active {
+  transition: opacity 0.3s;
+}
+
 section {
   width: 80%;
   margin: 0 auto;
+
+  @include tab {
+    width: 90%;
+  }
+
+  @include phone {
+    width: 95%;
+  }
 }
 
 a {
@@ -48,6 +63,10 @@ input[type="submit"] {
     border-style: none;
     @include search
   }
+
+  @include phone {
+    width: 70%;
+  }
 }
 
 .card {
@@ -66,15 +85,39 @@ input[type="submit"] {
     grid-column-gap: 30px;
     grid-row-gap: 30px;
 
+    @include tab {
+      margin-top: 20px;
+      grid-column-gap: 20px;
+      grid-row-gap: 20px;
+    }
+
+    @include phone {
+      grid-column-gap: 10px;
+      grid-row-gap: 10px;
+    }
+
     &__inner {
       border: 1px solid #fff;
       border-radius: 10px;
       padding: 18px;
+      position: relative;
+
+      @include phone {
+        padding: 10px;
+      }
 
       &__title {
         font-weight: 100;
         font-size: 2rem;
         margin-bottom: 2px;
+
+        @include pc {
+          font-size: 1.8rem;
+        }
+
+        @include tab {
+          font-size: 1.6rem;
+        }
 
         .icon {
           padding-right: 7px;
@@ -84,16 +127,31 @@ input[type="submit"] {
       &__text {
         font-size: 1.4rem;
         margin-top: 10px;
+
+        @include tab {
+          font-size: 1.2rem;
+        }
       }
     }
   }
 }
 
 .form {
-  margin: 40px auto;
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%, -50%);
+  /* width: 50%; */
+  /* max-width: 500px; */
+  width: 500px;
+
+  @include phone {
+    width: 300px;
+    margin-top: 0px;
+  }
 
   &__inner {
-    margin-top: 10px;
+    margin-top: 15px;
 
     label {
       display: inline-block;

@@ -41,26 +41,55 @@ export default {
       font-size: 15rem;
       padding-right: 10px;
 
+      @include tab {
+        font-size: 13rem;
+      }
+
+      @include phone {
+        font-size: 8rem;
+      }
+
       span {
         color: $basecolor;
+
+        @include pc {
+          color: purple;
+        }
+
+        @include tab {
+          color: powderblue;
+        }
+
+        @include phone {
+          color: red;
+        }
       }
     }
   }
-}
 
-.nav {
-  &-inner {
-    display: flex;
-    flex-direction: column;
 
-    input, a {
-      color: $keycolor;
-      font-size: 1.8rem;
+  .nav {
+    &-inner {
+      display: flex;
+      flex-direction: column;
 
-      background: none;
+      input, a {
+        color: $keycolor;
+        font-size: 1.8rem;
 
-      &:hover {
-        color: $basecolor;
+        @include tab {
+          font-size: 1.5rem;
+        }
+
+         @include phone {
+          font-size: 1.2rem;
+        }
+
+        background: none;
+
+        &:hover {
+          color: $basecolor;
+        }
       }
     }
   }

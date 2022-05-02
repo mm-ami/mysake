@@ -1,7 +1,9 @@
 <template>
   <div>
     <home-header />
-    <Nuxt />
+    <transition name="page">
+      <Nuxt />
+    </transition>
   </div>
 </template>
 

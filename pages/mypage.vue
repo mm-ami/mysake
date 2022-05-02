@@ -1,9 +1,11 @@
 <template>
   <section>
-    <search-content @parentMethod="handleChangeQuery"></search-content>
+    <div class="search-border">
+      <input v-model="keyword" type="text" placeholder="お酒の名前を検索" class="search">
+    </div>
     <div class="card">
       <div class="cardItem">
-        <div v-for="item in items" :key="item.id" class="cardItem__inner">
+        <div v-for="item in filteredUsers" :key="item.id" class="cardItem__inner">
           <h3 class="cardItem__inner__public">{{ item.public != 0 ? "公開" : "非公開" }}</h3>
           <h3 class="cardItem__inner__day">{{ $dateFns.format(item.t_date, 'yyyy年MM月dd日') }}</h3>
           <h2 class="cardItem__inner__title"><fa class="icon" :icon="faWineGlass" />{{ item.title }}</h2>
@@ -12,8 +14,10 @@
           </div>
           <div class="cardItem__inner__text">{{ item.body }}</div>
           <div class="cardItem__inner__edit">
-            <button @click="additem(item)" v-on:click="show = !show">編集</button>
-            <button @click="deletebtn(item)">削除</button>
+            <div class="cardItem__inner__edit__inner">
+              <button @click="additem(item)" v-on:click="show = !show">編集</button>
+              <button @click="deletebtn(item)">削除</button>
+            </div>
           </div>
         </div>
       </div>
@@ -38,14 +42,12 @@
 import { faXmark, faWineGlass } from "@fortawesome/free-solid-svg-icons"
 
 import FormContent from "../components/FormContent.vue"
-import SearchContent from "../components/SearchContent.vue"
 
 export default {
   name: 'MyPage',
 
   components:{
     FormContent,
-    SearchContent
   },
 
   transition: {
@@ -54,6 +56,7 @@ export default {
 
   data() {
     return {
+      items: [],
       editItem: {},
       keyword: '',
       show: false,
@@ -61,8 +64,10 @@ export default {
   },
 
   computed: {
-    items() {
-      return this.$store.getters.filterItems
+    filteredUsers() {
+      return this.items.filter((item) => {
+        return item.title.includes(this.keyword)
+      })
     },
     faWineGlass() {
       return faWineGlass
@@ -75,15 +80,11 @@ export default {
   async mounted() {
     await this.$axios.post("/mypage/mypagelist", this.$auth.$state.user.user)
     .then((response) => {
-      this.$store.dispatch("stateSetDatabase", response.data.response)
+      this.items = response.data.response
     })
   },
 
   methods: {
-    handleChangeQuery(args) {
-      console.log(this.items)
-      this.$store.commit("setFilterQuery", args)
-    },
 
     additem(e) {
       this.$refs.form.editItem(e)
@@ -122,40 +123,58 @@ export default {
   }
 
   &__edit {
-    text-align: right;
-    margin-top: 13px;
+    margin-top: 26px;
 
-    button {
-      border: $basecolor 1px solid;
-      background-color: rgba(0,0,0,0.9);
-      padding: 3px 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      color: $basecolor;
-      margin-left: 5px;
+    @include phone {
+      margin-top: 30px;
+    }
 
-      &:hover {
-        background-color: $basecolor;
-        color: rgba(0,0,0,0.9);
+    &__inner {
+      position: absolute;
+      right: 20px;
+      bottom: 10px;
+
+      @include phone {
+        right: 10px;
+      }
+
+      button {
+        border: $basecolor 1px solid;
+        background-color: rgba(0,0,0,0.9);
+        padding: 3px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        color: $basecolor;
+        margin-left: 5px;
+
+        &:hover {
+          background-color: $basecolor;
+          color: rgba(0,0,0,0.9);
+        }
       }
     }
   }
 }
 
 .modal {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    width: 80%;
-    max-width: 600px;
-    z-index: 2;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  width: 80%;
+  max-width: 600px;
+  z-index: 2;
 
   &__close {
     position: absolute;
     right: -40px;
-    top: 0;
+    top: -270px;
     cursor: pointer;
+
+    @include phone {
+      right: -20px;
+    }
+
     &__icon{
       font-size: 30px;
       color: $basecolor; 

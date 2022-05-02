@@ -4,12 +4,14 @@
     <div v-if="!$auth.loggedIn" class="noLogin">
       <h3>ログインすると自分が飲んだお酒を登録できます！</h3>
     </div>
-    <search-content @parentMethod="handleChangeQuery"></search-content>
+    <div class="search-border">
+      <input v-model="keyword" type="text" placeholder="お酒の名前を検索" class="search">
+    </div>
 
     <div class="card">
       <p v-if="error">{{error}}</p>
       <div class="cardItem">
-        <div v-for="item in items" :key="item.id" class="cardItem__inner">
+        <div v-for="item in filteredUsers" :key="item.id" class="cardItem__inner">
           <h2 class="cardItem__inner__title"><fa class="icon" :icon="faWineGlass" />{{ item.title }}</h2>
           <div class="cardItem__inner__star">
             <star-rating v-model="item.score" :increment="0.5" :star-size="28" active-color="#FFD768" :read-only="true"></star-rating>
@@ -29,29 +31,24 @@
 
 <script>
 import { faWineGlass, faUser } from "@fortawesome/free-solid-svg-icons"
-import SearchContent from "../components/SearchContent.vue"
 
 export default {
   name: 'HomePage',
 
-  components: {
-    SearchContent
-  },
-
   data() {
     return {
-      // filterQuery: {
-      //   title: "",
-      //   score: ""
-      // },
+      items: [],
+      keyword: '',
       error: ''
     }
   },
 
   computed: {
 
-    items() {
-      return this.$store.getters.filterItems
+    filteredUsers() {
+      return this.items.filter((item) => {
+        return item.title.includes(this.keyword)
+      })
     },
 
     faWineGlass() {
@@ -66,16 +63,8 @@ export default {
   async mounted() {
     await this.$axios.get("/home/homelist")
     .then((response) => {
-      this.$store.dispatch("stateSetDatabase", response.data.result)
+      this.items = response.data.result
     })
-
-    this.$store.commit("setFilterQuery", this.filterQuery)
-  },
-
-  methods: {
-    handleChangeQuery(args) {
-      this.$store.commit("setFilterQuery", args)
-    }
   }
 }
 </script>
@@ -83,16 +72,18 @@ export default {
 <style lang="scss" scoped>
 .noLogin {
   text-align: center;
+  margin-top: 10px;
 }
 
 .cardItem__inner__user {
-  margin-top: 10px;
-  text-align: right;
-  font-size: 1.4rem;
+  margin-top: 14px;
 
   a {
     color: $basecolor;
-    padding-right: 10px;
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+    font-size: 1.4rem;
 
     &:hover {
       color: $keycolor;
@@ -105,3 +96,4 @@ export default {
 }
 
 </style>
+

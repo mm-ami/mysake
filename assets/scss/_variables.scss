@@ -1,5 +1,28 @@
+$phone: 580px;
+$tab: 768px;
+$pc: 1060px;
+
 $keycolor: #FFD768;
 $basecolor: #fff;
+ 
+@mixin phone {
+  @media screen and (max-width: ($phone)) {
+    @content;
+  }
+}
+
+@mixin tab {
+  @media screen and (max-width: ($tab)) {
+    @content;
+  }
+}
+ 
+@mixin pc {
+  @media screen and (max-width: ($pc)) {
+    @content;
+  }
+}
+ 
 
 @mixin search($margin: 13px 0, $padding: 0 20px, $font-size: 1.8rem) {
   color: $basecolor;
