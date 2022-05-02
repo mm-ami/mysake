@@ -21,8 +21,9 @@
           </div>
         </div>
       </div>
-      <div v-if="!items.length">
-        <h2 class="noItem">登録されたお酒がありません。</h2>
+      <div v-if="!items.length" class="noItem">
+        <h2 class="noItem__title">登録されたお酒がありません。</h2>
+        <nuxt-link class="noItem__link" to="/form">お酒を登録する</nuxt-link>
       </div>
     </div>
 
@@ -64,14 +65,17 @@ export default {
   },
 
   computed: {
+
     filteredUsers() {
       return this.items.filter((item) => {
         return item.title.includes(this.keyword)
       })
     },
+
     faWineGlass() {
       return faWineGlass
     },
+
     faXmark() {
       return faXmark
     }
@@ -153,6 +157,17 @@ export default {
         }
       }
     }
+  }
+}
+
+.noItem__link {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 1.5rem;
+  color: $keycolor;
+
+  &:hover {
+    border-bottom: 3px solid $keycolor;
   }
 }
 

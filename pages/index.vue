@@ -9,7 +9,6 @@
     </div>
 
     <div class="card">
-      <p v-if="error">{{error}}</p>
       <div class="cardItem">
         <div v-for="item in filteredUsers" :key="item.id" class="cardItem__inner">
           <h2 class="cardItem__inner__title"><fa class="icon" :icon="faWineGlass" />{{ item.title }}</h2>
@@ -39,7 +38,6 @@ export default {
     return {
       items: [],
       keyword: '',
-      error: ''
     }
   },
 
@@ -65,6 +63,15 @@ export default {
     .then((response) => {
       this.items = response.data.result
     })
+  },
+
+  methods: {
+    scrollTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+    },
   }
 }
 </script>

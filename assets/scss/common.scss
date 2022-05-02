@@ -141,9 +141,7 @@ input[type="submit"] {
   left: 50%;
   top: 55%;
   transform: translate(-50%, -50%);
-  /* width: 50%; */
-  /* max-width: 500px; */
-  width: 500px;
+  width: 450px;
 
   @include phone {
     width: 300px;
@@ -151,7 +149,7 @@ input[type="submit"] {
   }
 
   &__inner {
-    margin-top: 15px;
+    margin-top: 10px;
 
     label {
       display: inline-block;
@@ -173,6 +171,9 @@ input[type="submit"] {
 
 .noItem {
   text-align: center;
-  margin-top: 20px;
-  font-size: 2rem;
+
+  &__title {
+    margin-top: 20px;
+    font-size: 2rem;
+  }
 }

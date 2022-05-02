@@ -13,8 +13,8 @@
           </div>
         </div>
       </div>
-      <div v-if="!items.length">
-        <h2 class="noItem">表示できるお酒がありません。</h2>
+      <div v-if="!items.length" class="noItem">
+        <h2 class="noItem__title">表示できるお酒がありません。</h2>
       </div>
     </div>
     
