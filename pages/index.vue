@@ -1,5 +1,5 @@
 <template>
-  <section id="home">
+  <section>
 
     <div v-if="!$auth.loggedIn" class="noLogin">
       <h3>ログインすると自分が飲んだお酒を登録できます！</h3>
@@ -11,7 +11,9 @@
     <div class="card">
       <div class="cardItem">
         <div v-for="item in filteredUsers" :key="item.id" class="cardItem__inner">
-          <h2 class="cardItem__inner__title"><fa class="icon" :icon="faWineGlass" />{{ item.title }}</h2>
+          <h2 class="cardItem__inner__title"><fa class="icon" :icon="faWineGlass" />
+            {{ item.title }}
+          </h2>
           <div class="cardItem__inner__star">
             <star-rating v-model="item.score" :increment="0.5" :star-size="28" active-color="#FFD768" :read-only="true"></star-rating>
           </div>
@@ -19,7 +21,9 @@
             {{ item.body }}
           </div>
           <div class="cardItem__inner__user">
-            <nuxt-link :to="{ path: `/OtherUser/?id=${item.user_id}`}"><fa class="user-icon" :icon="faUser" />{{ item.name }}</nuxt-link>
+            <nuxt-link :to="{ path: `/OtherUser/?id=${item.user_id}`}"><fa class="user-icon" :icon="faUser" />
+              {{ item.name }}
+            </nuxt-link>
           </div>
         </div>
       </div>
@@ -29,7 +33,7 @@
 </template>
 
 <script>
-import { faWineGlass, faUser } from "@fortawesome/free-solid-svg-icons"
+import { faWineGlass, faUser, faCircleUp } from "@fortawesome/free-solid-svg-icons"
 
 export default {
   name: 'HomePage',
@@ -55,6 +59,10 @@ export default {
 
     faUser() {
       return faUser
+    },
+
+    faCircleUp() {
+      return faCircleUp
     }
   },
   
@@ -63,15 +71,6 @@ export default {
     .then((response) => {
       this.items = response.data.result
     })
-  },
-
-  methods: {
-    scrollTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
-    },
   }
 }
 </script>

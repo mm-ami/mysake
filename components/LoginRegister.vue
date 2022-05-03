@@ -1,11 +1,13 @@
 <template>
   <form class="form">
     <h2>{{title}}</h2>
+
     <div class="form__inner">
       <label for="username">ユーザー名</label>
       <p v-if="$v.user.username.$error">ユーザー名を入力してください。</p>
       <input id="username" v-model="$v.user.username.$model" name="username" type="text">
     </div>
+
     <div class="form__inner">
       <label for="password">パスワード</label>
       <p v-if="$v.user.password.$error && !$v.user.password.required">パスワードを入力してください</p>
@@ -74,5 +76,6 @@ export default {
   input[type=submit] {
     @include submit(7px 10px)
   }
+  
 }
 </style>

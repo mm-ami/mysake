@@ -1,18 +1,28 @@
 <template>
   <section>
+
     <div class="search-border">
       <input v-model="keyword" type="text" placeholder="お酒の名前を検索" class="search">
     </div>
+    
     <div class="card">
       <div class="cardItem">
         <div v-for="item in filteredUsers" :key="item.id" class="cardItem__inner">
-          <h3 class="cardItem__inner__public">{{ item.public != 0 ? "公開" : "非公開" }}</h3>
-          <h3 class="cardItem__inner__day">{{ $dateFns.format(item.t_date, 'yyyy年MM月dd日') }}</h3>
-          <h2 class="cardItem__inner__title"><fa class="icon" :icon="faWineGlass" />{{ item.title }}</h2>
+          <h3 class="cardItem__inner__public">
+            {{ item.public != 0 ? "公開" : "非公開" }}
+          </h3>
+          <h3 class="cardItem__inner__day">
+            {{ $dateFns.format(item.t_date, 'yyyy年MM月dd日') }}
+          </h3>
+          <h2 class="cardItem__inner__title"><fa class="icon" :icon="faWineGlass" />
+            {{ item.title }}
+          </h2>
           <div class="cardItem__inner__star">
             <star-rating v-model="item.score" :increment="0.5" :star-size="28" active-color="#FFD768" :read-only="true"></star-rating>
           </div>
-          <div class="cardItem__inner__text">{{ item.body }}</div>
+          <div class="cardItem__inner__text">
+            {{ item.body }}
+          </div>
           <div class="cardItem__inner__edit">
             <div class="cardItem__inner__edit__inner">
               <button @click="additem(item)" v-on:click="show = !show">編集</button>
@@ -21,6 +31,7 @@
           </div>
         </div>
       </div>
+
       <div v-if="!items.length" class="noItem">
         <h2 class="noItem__title">登録されたお酒がありません。</h2>
         <nuxt-link class="noItem__link" to="/form">お酒を登録する</nuxt-link>
@@ -83,8 +94,8 @@ export default {
 
   async mounted() {
     await this.$axios.post("/mypage/mypagelist", this.$auth.$state.user.user)
-    .then((response) => {
-      this.items = response.data.response
+    .then((result) => {
+      this.items = result.data.result
     })
   },
 

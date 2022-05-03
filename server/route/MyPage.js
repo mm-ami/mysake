@@ -26,8 +26,8 @@ router.post("/mypagelist", async function(req, res) {
   .where("del_flg", 0)
   .andWhere("topics.user_id", id)
   .orderBy("t_date", "DESC")
-  .then((response) => {
-    return res.json({response})
+  .then((result) => {
+    return res.json({result})
   })
   .catch(() => {
     res.sendStatus(400)

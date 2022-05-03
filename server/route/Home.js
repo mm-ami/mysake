@@ -3,7 +3,7 @@ const knex = require("../knex/knex");
 
 router.get("/homelist", async function(req, res) {
   await knex("topics")
-  .select("topics.id", "name", "topics.id", "user_id", "t_date", "title", "score", "body")
+  .select("topics.id", "name", "user_id", "t_date", "title", "score", "body")
   .where({del_flg: 0})
   .andWhere({public: 1})
   .innerJoin("users", "topics.user_id", "users.id")

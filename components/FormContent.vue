@@ -131,10 +131,6 @@ export default {
       padding: 0 9px;
       font-size: 1.4rem;
     }
-
-    p {
-      @include notice
-    }
   }
   input[type=submit] {
     @include submit
