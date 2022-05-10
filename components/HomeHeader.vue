@@ -1,19 +1,22 @@
 <template>
   <section id="header">
+
     <div class="title">
-      <nuxt-link class="mainname" to="/"><span>My</span>Sake</nuxt-link>
+      <nuxt-link class="title__name" to="/"><span>My</span>Sake</nuxt-link>
     </div>
+
     <nav class="nav">
-      <div v-if="!$auth.loggedIn" class="nav-inner" >
+      <div v-if="!$auth.loggedIn" class="nav__inner" >
         <nuxt-link to="/register">新規作成</nuxt-link>
         <nuxt-link to="/login">ログイン</nuxt-link>
       </div>
-      <div v-else class="nav-inner">
+      <div v-else class="nav__inner">
         <nuxt-link to="/form">お酒を登録</nuxt-link>
         <nuxt-link to="/mypage">マイページ</nuxt-link>
         <input type="submit" value="ログアウト" @click="$auth.logout()">
       </div>
     </nav>
+
   </section>
 </template>
 
@@ -35,7 +38,7 @@ export default {
     display: flex;
     align-items: flex-end;
 
-    .mainname {
+    &__name {
       font-family: 'Whisper', cursive;
       color: $keycolor;
       font-size: 15rem;
@@ -51,25 +54,13 @@ export default {
 
       span {
         color: $basecolor;
-
-        @include pc {
-          color: purple;
-        }
-
-        @include tab {
-          color: powderblue;
-        }
-
-        @include phone {
-          color: red;
-        }
       }
     }
   }
 
 
   .nav {
-    &-inner {
+    &__inner {
       display: flex;
       flex-direction: column;
 

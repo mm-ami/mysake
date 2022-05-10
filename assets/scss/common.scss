@@ -20,6 +20,7 @@ body {
 .page-enter {
   opacity: 0;
 }
+
 .page-enter-active {
   transition: opacity 0.3s;
 }
@@ -41,7 +42,7 @@ a {
   text-decoration: none;
 }
 
-input[type="submit"] {
+input[type=submit] {
   border-style: none;
   color: $basecolor;
   cursor: pointer;
@@ -59,13 +60,13 @@ input[type="submit"] {
   width: 50%;
   margin: 10px auto;
 
+  @include phone {
+    width: 70%;
+  }
+
   .search {
     border-style: none;
     @include search
-  }
-
-  @include phone {
-    width: 70%;
   }
 }
 
@@ -148,16 +149,18 @@ input[type="submit"] {
     margin-top: 0px;
   }
 
+  p {
+    color: #e8374a;
+    display: inline-block;
+    padding-left: 10px;
+  }
+
   &__inner {
     margin-top: 10px;
 
     label {
       display: inline-block;
       font-size: 1.4rem;
-    }
-
-    p {
-      @include notice
     }
 
     input {
@@ -175,5 +178,18 @@ input[type="submit"] {
   &__title {
     margin-top: 20px;
     font-size: 2rem;
+  }
+}
+
+.top-icon {
+  font-size: 5rem;
+  position: fixed;
+  right: 19px;
+  bottom: 45px;
+  cursor: pointer;
+  color: $keycolor;
+
+  @include tab {
+    display: none;
   }
 }

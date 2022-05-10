@@ -1,10 +1,9 @@
 export default {
-  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
+
   ssr: false,
 
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'mysake',
+    title: 'MySake',
     htmlAttrs: {
       lang: 'ja',
     },
@@ -20,12 +19,10 @@ export default {
     ],
   },
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     { src: '~/assets/scss/common.scss' },
   ],
 
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/star-rating',
     '@/plugins/vuelidate.js',
@@ -35,18 +32,11 @@ export default {
     }
   ],
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-    // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
-  ],
+  buildModules: ['@nuxtjs/eslint-module',],
 
-  // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/style-resources',
@@ -58,18 +48,16 @@ export default {
     component: 'fa',
   },
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: '/server',
   },
 
   auth: {
     redirect: {
-      login: '/login',   // 未ログイン時に認証ルートへアクセスした際のリダイレクトURL
-      logout: '/',  // ログアウト時のリダイレクトURL
-      callback: false,   // Oauth認証等で必要となる コールバックルート
-      home: '/',         // ログイン後のリダイレクトURL
+      login: '/login',
+      logout: '/',
+      callback: false,
+      home: '/',
     },
     strategies: {
       local: {
@@ -90,7 +78,6 @@ export default {
 
   serverMiddleware: ['~/server'],
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     loadingScreen: false,
   },
